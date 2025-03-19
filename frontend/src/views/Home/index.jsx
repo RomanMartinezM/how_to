@@ -1,55 +1,324 @@
 // import { useState, useEffect } from 'react';
-// import '../../App.css'
+import "../../App.css";
 // import { set, useForm } from 'react-hook-form';
 
 const Home = () => {
-    return (
-        <>
-<main id="content" role="main" className="w-full  max-w-md mx-auto p-6">
-    <div className="mt-7 bg-white  rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700 border-2 border-indigo-300">
-      <div className="p-4 sm:p-7">
-        <div className="text-center">
-          <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Forgot password?</h1>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            Remember your password?
-            <a className="text-blue-600 decoration-2 hover:underline font-medium" href="#">
-              Login here
-            </a>
-          </p>
-        </div>
-
-        <div className="mt-5">
-          <form>
-            <div className="grid gap-y-4">
-              <div>
-                <label htmlFor="email" className="block text-sm font-bold ml-1 mb-2 dark:text-white">Email address</label>
-                <div className="relative">
-                  <input type="email" id="email" name="email" className="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm" required aria-describedby="email-error"/>
+  return (
+    <>
+      <div className="bg-gray-100">
+        {/* <!-- Dark Mode Navbar --> */}
+        <nav className="bg-gray-900 text-white shadow-lg">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between h-16">
+              <div className="flex items-center">
+                <a
+                  href="#"
+                  className="flex-shrink-0 flex items-center">
+                  <img
+                    className="h-8 w-auto"
+                    src="https://tailwindflex.com/images/logo.svg"
+                    alt="Logo"
+                  />
+                  <span className="ml-2 text-xl font-bold">Navbar</span>
+                </a>
+                <div className="hidden md:ml-6 md:flex md:space-x-8">
+                  <a
+                    href="#"
+                    className="text-white border-b-2 border-indigo-500 px-1 pt-1 inline-flex items-center text-sm font-medium">
+                    Dashboard
+                  </a>
+                  <a
+                    href="#"
+                    className="text-gray-300 hover:text-white border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 inline-flex items-center text-sm font-medium">
+                    Team
+                  </a>
+                  <a
+                    href="#"
+                    className="text-gray-300 hover:text-white border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 inline-flex items-center text-sm font-medium">
+                    Projects
+                  </a>
+                  <a
+                    href="#"
+                    className="text-gray-300 hover:text-white border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 inline-flex items-center text-sm font-medium">
+                    Calendar
+                  </a>
                 </div>
-                <p className="hidden text-xs text-red-600 mt-2" id="email-error">Please include a valid email address so we can get back to you</p>
               </div>
-              <button type="submit" className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">Reset password</button>
+              <div className="flex items-center">
+                {/* <!-- Search --> */}
+                <div className="hidden md:flex md:ml-4">
+                  <div className="relative">
+                    <input
+                      type="text"
+                      className="bg-gray-800 text-white rounded-md pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 w-64"
+                      placeholder="Search..."
+                    />
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <svg
+                        className="h-5 w-5 text-gray-400"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path
+                          fillRule="evenodd"
+                          d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                {/* <!-- Profile dropdown --> */}
+                <div className="ml-3 relative hidden md:block">
+                  <div>
+                    <button
+                      type="button"
+                      className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                      id="user-menu-button"
+                      aria-expanded="false"
+                      aria-haspopup="true">
+                      <span className="sr-only">Open user menu</span>
+                      <img
+                        className="h-8 w-8 rounded-full"
+                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        alt=""
+                      />
+                    </button>
+                  </div>
+
+                  {/* <!-- Dropdown menu, show/hide based on menu state --> */}
+                  <div
+                    className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden"
+                    id="user-menu"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="user-menu-button"
+                    tabIndex="-1">
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      role="menuitem"
+                      tabIndex="-1">
+                      Your Profile
+                    </a>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      role="menuitem"
+                      tabIndex="-1">
+                      Settings
+                    </a>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      role="menuitem"
+                      tabIndex="-1">
+                      Sign out
+                    </a>
+                  </div>
+                </div>
+
+                {/* <!-- Mobile menu button --> */}
+                <div className="flex items-center md:hidden ml-4">
+                  <button
+                    type="button"
+                    className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                    aria-expanded="false"
+                    id="mobile-menu-button">
+                    <span className="sr-only">Open main menu</span>
+                    <svg
+                      className="block h-6 w-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M4 6h16M4 12h16M4 18h16"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
-          </form>
+          </div>
+
+          {/* <!-- Mobile menu, show/hide based on menu state --> */}
+          <div
+            className="md:hidden hidden"
+            id="mobile-menu">
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              <a
+                href="#"
+                className="bg-gray-800 text-white block px-3 py-2 rounded-md text-base font-medium">
+                Dashboard
+              </a>
+              <a
+                href="#"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                Team
+              </a>
+              <a
+                href="#"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                Projects
+              </a>
+              <a
+                href="#"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                Calendar
+              </a>
+            </div>
+
+            {/* <!-- Mobile search --> */}
+            <div className="px-2 pt-2 pb-3">
+              <div className="relative">
+                <input
+                  type="text"
+                  className="bg-gray-800 text-white w-full rounded-md pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  placeholder="Search..."
+                />
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg
+                    className="h-5 w-5 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path
+                      fillRule="evenodd"
+                      d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* <!-- Mobile profile --> */}
+            <div className="pt-4 pb-3 border-t border-gray-700">
+              <div className="flex items-center px-5">
+                <div className="flex-shrink-0">
+                  <img
+                    className="h-10 w-10 rounded-full"
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    alt=""
+                  />
+                </div>
+                <div className="ml-3">
+                  <div className="text-base font-medium text-white">
+                    Tom Cook
+                  </div>
+                  <div className="text-sm font-medium text-gray-400">
+                    tom@example.com
+                  </div>
+                </div>
+              </div>
+              <div className="mt-3 px-2 space-y-1">
+                <a
+                  href="#"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">
+                  Your Profile
+                </a>
+                <a
+                  href="#"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">
+                  Settings
+                </a>
+                <a
+                  href="#"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">
+                  Sign out
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <div className="container mx-auto pt-12 pb-20">
+          <h1 className="text-4xl font-bold text-gray-800 text-center mb-8">
+            Welcome to my website
+          </h1>
+
+          <div className="relative w-full max-w-xl mx-auto bg-white rounded-full">
+            <input
+              placeholder="e.g. Blog"
+              className="rounded-full w-full h-16 bg-transparent py-2 pl-8 pr-32 outline-none border-2 border-gray-100 shadow-md hover:outline-none focus:ring-teal-200 focus:border-teal-200"
+              type="text"
+              name="query"
+              id="query"
+            />
+            <button
+              type="submit"
+              className="absolute inline-flex items-center h-10 px-4 py-2 text-sm text-white transition duration-150 ease-in-out rounded-full outline-none right-3 top-3 bg-teal-600 sm:px-6 sm:text-base sm:font-medium hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+              <svg
+                className="-ml-0.5 sm:-ml-1 mr-2 w-4 h-4 sm:h-5 sm:w-5"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+              Search
+            </button>
+          </div>
+
+          <p className="text-gray-700 text-lg text-center mb-12">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit
+            amet magna id ex hendrerit semper.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <h2 className="text-xl font-bold text-gray-800 mb-4">Services</h2>
+              <p className="text-gray-700">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+                sit amet magna id ex hendrerit semper.
+              </p>
+            </div>
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <h2 className="text-xl font-bold text-gray-800 mb-4">About Us</h2>
+              <p className="text-gray-700">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+                sit amet magna id ex hendrerit semper.
+              </p>
+            </div>
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <h2 className="text-xl font-bold text-gray-800 mb-4">Contact</h2>
+              <p className="text-gray-700">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+                sit amet magna id ex hendrerit semper.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-
-    <p className="mt-3 flex justify-center items-center text-center divide-x divide-gray-300 dark:divide-gray-700">
-      <a className="pr-3.5 inline-flex items-center gap-x-2 text-sm text-gray-600 decoration-2 hover:underline hover:text-blue-600 dark:text-gray-500 dark:hover:text-gray-200" href="#" target="_blank">
-        <svg className="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
-        </svg>
-        View Github
-      </a>
-      <a className="pl-3 inline-flex items-center gap-x-2 text-sm text-gray-600 decoration-2 hover:underline hover:text-blue-600 dark:text-gray-500 dark:hover:text-gray-200" href="#">
+      {/* <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+        });
         
-        Contact us!
-      </a>
-    </p>
-  </main>
-        </>
-    );
-}
+        // User menu toggle
+        document.getElementById('user-menu-button')?.addEventListener('click', function() {
+            const userMenu = document.getElementById('user-menu');
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !isExpanded);
+            userMenu.classList.toggle('hidden');
+        });
+    </script> */}
+    </>
+  );
+};
 
 export default Home;
