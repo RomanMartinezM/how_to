@@ -1,13 +1,33 @@
 // import { useState, useEffect } from 'react';
 import "../../App.css";
+import InfoCard from "../../components/InfoCard";
+import Navbar from "../../components/Navbar";
+import SearchForm from "../../components/SearchForm";
 // import { set, useForm } from 'react-hook-form';
 
 const Home = () => {
+  const dataServices = {
+    title: "Services",
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maurissit amet magna id ex hendrerit semper.",
+  };
+
+  const dataAbout = {
+    title: "About Us",
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maurissit amet magna id ex hendrerit semper.",
+  };
+  const dataContact = {
+    title: "Contact",
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maurissit amet magna id ex hendrerit semper.",
+  };
+
   return (
     <>
       <div className="bg-gray-100">
-        {/* <!-- Dark Mode Navbar --> */}
-        <nav className="bg-gray-900 text-white shadow-lg">
+        <Navbar />
+        {/* <nav className="bg-gray-900 text-white shadow-lg">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16">
               <div className="flex items-center">
@@ -45,7 +65,6 @@ const Home = () => {
                 </div>
               </div>
               <div className="flex items-center">
-                {/* <!-- Search --> */}
                 <div className="hidden md:flex md:ml-4">
                   <div className="relative">
                     <input
@@ -69,7 +88,6 @@ const Home = () => {
                   </div>
                 </div>
 
-                {/* <!-- Profile dropdown --> */}
                 <div className="ml-3 relative hidden md:block">
                   <div>
                     <button
@@ -87,7 +105,6 @@ const Home = () => {
                     </button>
                   </div>
 
-                  {/* <!-- Dropdown menu, show/hide based on menu state --> */}
                   <div
                     className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden"
                     id="user-menu"
@@ -119,7 +136,6 @@ const Home = () => {
                   </div>
                 </div>
 
-                {/* <!-- Mobile menu button --> */}
                 <div className="flex items-center md:hidden ml-4">
                   <button
                     type="button"
@@ -146,8 +162,6 @@ const Home = () => {
               </div>
             </div>
           </div>
-
-          {/* <!-- Mobile menu, show/hide based on menu state --> */}
           <div
             className="md:hidden hidden"
             id="mobile-menu">
@@ -174,7 +188,6 @@ const Home = () => {
               </a>
             </div>
 
-            {/* <!-- Mobile search --> */}
             <div className="px-2 pt-2 pb-3">
               <div className="relative">
                 <input
@@ -198,7 +211,6 @@ const Home = () => {
               </div>
             </div>
 
-            {/* <!-- Mobile profile --> */}
             <div className="pt-4 pb-3 border-t border-gray-700">
               <div className="flex items-center px-5">
                 <div className="flex-shrink-0">
@@ -236,14 +248,15 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </nav>
+        </nav> */}
 
         <div className="container mx-auto pt-12 pb-20">
           <h1 className="text-4xl font-bold text-gray-800 text-center mb-8">
             Welcome to my website
           </h1>
 
-          <div className="relative w-full max-w-xl mx-auto bg-white rounded-full">
+          <SearchForm />
+          {/* <div className="relative w-full max-w-xl mx-auto bg-white rounded-full">
             <input
               placeholder="e.g. Blog"
               className="rounded-full w-full h-16 bg-transparent py-2 pl-8 pr-32 outline-none border-2 border-gray-100 shadow-md hover:outline-none focus:ring-teal-200 focus:border-teal-200"
@@ -268,7 +281,7 @@ const Home = () => {
               </svg>
               Search
             </button>
-          </div>
+          </div> */}
 
           <p className="text-gray-700 text-lg text-center mb-12">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit
@@ -276,27 +289,39 @@ const Home = () => {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-lg shadow-lg p-8">
+            <InfoCard
+              title={dataServices.title}
+              content={dataServices.content}
+            />
+            <InfoCard
+              title={dataAbout.title}
+              content={dataAbout.content}
+            />
+            <InfoCard
+              title={dataContact.title}
+              content={dataContact.content}
+            />
+            {/* <div className="bg-white rounded-lg shadow-lg p-8">
               <h2 className="text-xl font-bold text-gray-800 mb-4">Services</h2>
               <p className="text-gray-700">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
                 sit amet magna id ex hendrerit semper.
               </p>
-            </div>
-            <div className="bg-white rounded-lg shadow-lg p-8">
+            </div> */}
+            {/* <div className="bg-white rounded-lg shadow-lg p-8">
               <h2 className="text-xl font-bold text-gray-800 mb-4">About Us</h2>
               <p className="text-gray-700">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
                 sit amet magna id ex hendrerit semper.
               </p>
-            </div>
-            <div className="bg-white rounded-lg shadow-lg p-8">
+            </div> */}
+            {/* <div className="bg-white rounded-lg shadow-lg p-8">
               <h2 className="text-xl font-bold text-gray-800 mb-4">Contact</h2>
               <p className="text-gray-700">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
                 sit amet magna id ex hendrerit semper.
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
