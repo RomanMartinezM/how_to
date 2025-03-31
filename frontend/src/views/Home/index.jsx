@@ -252,7 +252,7 @@ const Home = () => {
 
         <div className="container mx-auto pt-12 pb-20">
           <h1 className="text-4xl font-bold text-gray-800 text-center mb-8">
-            Welcome to my website
+            Welcome
           </h1>
 
           <SearchForm />
@@ -284,8 +284,7 @@ const Home = () => {
           </div> */}
 
           <p className="text-gray-700 text-lg text-center mb-12">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit
-            amet magna id ex hendrerit semper.
+            The most searched
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

@@ -2,7 +2,7 @@ const SearchForm = () => {
   return (
     <div className="relative w-full max-w-xl mx-auto bg-white rounded-full">
       <input
-        placeholder="e.g. Blog"
+        placeholder="Search"
         className="rounded-full w-full h-16 bg-transparent py-2 pl-8 pr-32 outline-none border-2 border-gray-100 shadow-md hover:outline-none focus:ring-teal-200 focus:border-teal-200"
         type="text"
         name="query"

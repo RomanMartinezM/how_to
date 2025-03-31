@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import "../../App.css";
 import { set, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState([]);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -11,7 +13,6 @@ const Login = () => {
   } = useForm();
 
   const handleSubmitForm = async (data) => {
-    console.log(data);
     try {
       setIsLoading(true);
       const res = await fetch("http://localhost:8000/api/login", {
@@ -19,7 +20,11 @@ const Login = () => {
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
       });
-      return res.json();
+      if (!res.ok) throw new Error("Invalid credentials");
+      const resData = await res.json();
+      if (resData.success) {
+        navigate("/");
+      }
     } catch (error) {
       console.log(error);
     } finally {
