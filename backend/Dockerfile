@@ -12,7 +12,7 @@ WORKDIR /var/www/html
 # Install composer dependencies
 RUN apt-get update && apt-get install -y unzip
 RUN curl -sS https://getcomposer.org/installer | php
-RUN php composer.phar install
+RUN php composer.phar install --ignore-platform-req=ext-mongodb
 
 # Expose port
 EXPOSE 80
