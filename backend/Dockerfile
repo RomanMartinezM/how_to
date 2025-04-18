@@ -10,13 +10,9 @@ COPY . /var/www/html
 WORKDIR /var/www/html
 
 #install all the system dependencies and enable PHP modules 
-RUN apt-get update && apt-get install -y \
-      libicu-dev \
-      libpq-dev \
-      libmcrypt-dev \
-      git \
-      zip \
-      unzip \
+
+
+RUN apt-get update -y && apt-get install -y libicu-dev libpq-dev libmcrypt-dev git zip unzip \
     && rm -r /var/lib/apt/lists/* \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
     && docker-php-ext-install \
@@ -29,7 +25,7 @@ RUN apt-get update && apt-get install -y \
       pgsql \
       zip \
       opcache \
-      mongodb
+      mongodb \
 
 # Install composer dependencies
 #install composer
@@ -50,6 +46,13 @@ RUN a2enmod rewrite
 
 #copy source files and run composer
 COPY . $APP_HOME
+
+# Verify that Composer is installed in your Docker container
+RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
+
+# debugging line to check if the command is accessible
+RUN composer --version
+
 
 # install all PHP dependencies
 RUN composer install --no-interaction
