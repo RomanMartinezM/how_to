@@ -1,3 +1,7 @@
+FROM httpd:2.4
+COPY ./backend/ /usr/local/apache2/htdocs/
+RUN echo "ServerName localhost" >> /usr/local/apache2/conf/httpd.conf
+
 # Use the official PHP image
 FROM php:8.1-apache
 # Use the official PHP image
@@ -12,24 +16,30 @@ WORKDIR /var/www/html
 #install all the system dependencies and enable PHP modules 
 
 
-RUN apt-get update -y && apt-get install -y libicu-dev libpq-dev libmcrypt-dev git zip unzip \
-    && rm -r /var/lib/apt/lists/* \
-    && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
-    && docker-php-ext-install \
-      intl \
-      mbstring \
-      mcrypt \
-      pcntl \
-      pdo_mysql \
-      pdo_pgsql \
-      pgsql \
-      zip \
-      opcache \
-      mongodb \
+# Update and install required dependencies, including libonig-dev for mbstring
+RUN apt-get update -y && apt-get install -y \
+    libicu-dev libpq-dev libmcrypt-dev libonig-dev git zip unzip \
+    && rm -r /var/lib/apt/lists/*
 
+# Configure and install PHP extensions
+RUN docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
+RUN docker-php-ext-install \
+    intl \
+    mbstring \
+    pcntl \
+    pdo_mysql \
+    pdo_pgsql \
+    pgsql \
+    zip \
+    opcache
+
+
+# Install MongoDB via PECL
+RUN pecl install mongodb && docker-php-ext-enable mongodb
+      
 # Install composer dependencies
-#install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
+#install composer
 # RUN php composer.phar install --ignore-platform-reqs
 
 #set our application folder as an environment variable
@@ -53,9 +63,8 @@ RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/lo
 # debugging line to check if the command is accessible
 RUN composer --version
 
-
 # install all PHP dependencies
-RUN composer install --no-interaction
+RUN composer install --no-interaction  --ignore-platform-reqs
 
 # RUN composer dump-autoload --optimize --classmap-authoritative
 
