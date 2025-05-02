@@ -18,7 +18,7 @@ WORKDIR /var/www/html
 
 # Update and install required dependencies, including libonig-dev for mbstring
 RUN apt-get update -y && apt-get install -y \
-    libicu-dev libpq-dev libmcrypt-dev libonig-dev git zip unzip \
+    libicu-dev libpq-dev libmcrypt-dev libonig-dev git zip unzip libzip-dev \
     && rm -r /var/lib/apt/lists/*
 
 # Configure and install PHP extensions
