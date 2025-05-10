@@ -1,4 +1,28 @@
+import { useState } from "react";
+import apiService from "../../services/apiService";
+import Notification from "../Notification";
+import ContentSearch from "../ContentSearch";
+
 const SearchForm = () => {
+  const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [content, setContent] = useState("");
+
+  const handleSearch = async () => {
+    setLoading(true);
+    setMessage("Searching, please wait...");
+    try {
+      const promptRes = await apiService.getResponse(query);
+      setContent(promptRes.choices[0].message.content);
+    } catch (error) {
+      setMessage("Error: " + error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="relative w-full max-w-xl mx-auto bg-white rounded-full">
       <input
@@ -7,10 +31,13 @@ const SearchForm = () => {
         type="text"
         name="query"
         id="query"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
       />
       <button
         type="submit"
-        className="absolute inline-flex items-center h-10 px-4 py-2 text-sm text-white transition duration-150 ease-in-out rounded-full outline-none right-3 top-3 bg-teal-600 sm:px-6 sm:text-base sm:font-medium hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+        className="absolute inline-flex items-center h-10 px-4 py-2 text-sm text-white transition duration-150 ease-in-out rounded-full outline-none right-3 top-3 bg-teal-600 sm:px-6 sm:text-base sm:font-medium hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+        onClick={handleSearch}>
         <svg
           className="-ml-0.5 sm:-ml-1 mr-2 w-4 h-4 sm:h-5 sm:w-5"
           xmlns="http://www.w3.org/2000/svg"
@@ -25,6 +52,13 @@ const SearchForm = () => {
         </svg>
         Search
       </button>
+
+      <Notification
+        loading={loading}
+        message={message}
+      />
+
+      <ContentSearch content={content} />
     </div>
   );
 };

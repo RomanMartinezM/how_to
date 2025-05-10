@@ -15,11 +15,17 @@ const openai = new OpenAI({
     "HTTP-Referer": "<YOUR_SITE_URL>", // Optional. Site URL for rankings on openrouter.ai.
     "X-Title": "<YOUR_SITE_NAME>", // Optional. Site title for rankings on openrouter.ai.
   },
+  dangerouslyAllowBrowser: true,
 });
 
+/**
+ * Make a GET request to the API
+ * @param {String} prompt - Prompt to pass
+ * @returns {Promise} - The fetch promise
+ */
 export const getResponse = async (prompt) => {
   try {
-    const completion = await openai.chat.completions.create({
+    const response = await openai.chat.completions.create({
       model: "microsoft/mai-ds-r1:free",
       messages: [
         {
@@ -29,7 +35,11 @@ export const getResponse = async (prompt) => {
       ],
     });
 
-    return completion.choices[0].message;
+    if (!response.choices[0].message) {
+      throw new Error(`API error: ${response}`);
+    }
+
+    return response;
   } catch (error) {
     throw error;
   }

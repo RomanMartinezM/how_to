@@ -1,7 +1,8 @@
 // API base URL - can be loaded from environment variables
-const API_BASE_URL = import.meta.env.BASE_URL || "http://localhost:8000/api";
+const API_BASE_URL =
+  import.meta.env.VITE_BASE_URL || "http://localhost:8000/api";
 // API key - should be loaded from environment variables
-const OPEN_ROUTER_API_KEY = import.meta.env.OPEN_ROUTER_KEY || "";
+const OPEN_ROUTER_API_KEY = import.meta.env.VITE_OPEN_ROUTER_KEY || "";
 
 // Default headers for API requests
 const DEFAULT_HEADERS = {
