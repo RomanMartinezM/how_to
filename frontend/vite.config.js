@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: process.env.VITE_NODE_ENV === "production" ? "./" : "/",
+  base: "/", // Use "/" for Netlify and most static hosts
   build: {
     outDir: "dist",
   },
