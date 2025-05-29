@@ -4,9 +4,6 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
@@ -16,7 +13,7 @@ jobs:
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v3.0
         with:
-          publish-dir: './dist'
+          publish-dir: './frontend/dist'
           production-branch: main
           deploy-message: "Deploy from GitHub Actions"
           enable-commit-comment: true
