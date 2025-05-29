@@ -2,16 +2,21 @@ name: deploy frontend and backend
 on:
   push:
 jobs:
-  build:
-    runs-on: ubuntu-22.04
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm install
       - name: Build
         run: npm run build
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v3.0
         with:
-          publish-dir: './frontend/dist'
+          publish-dir: './dist'
           production-branch: main
           deploy-message: "Deploy from GitHub Actions"
           enable-commit-comment: true
