@@ -35,10 +35,10 @@ jobs:
         run: composer install --no-dev --optimize-autoloader
       - name: Deploy to Railway
         uses: bervProject/railway-deploy@main
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         with:
-        railwayProjectId: ${{ secrets.RAILWAY_PROJECT_ID }}
-        railwayToken: ${{ secrets.RAILWAY_TOKEN }}
-        service: "how-to"
+          service: "how-to"
 
 
           
