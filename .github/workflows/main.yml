@@ -2,7 +2,7 @@ name: deploy frontend and backend
 on:
   push:
 jobs:
-  build-and-deploy:
+  netlify-deploy:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -23,5 +23,22 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-       
+
+  railway-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader
+      - name: Deploy to Railway
+        uses: bervProject/railway-deploy@main
+        with:
+        railwayProjectId: ${{ secrets.RAILWAY_PROJECT_ID }}
+        railwayToken: ${{ secrets.RAILWAY_TOKEN }}
+        service: "how-to"
+
+
           
