@@ -38,6 +38,7 @@ jobs:
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         with:
+          php-version: '8.1.10'
           service: "how-to"
 
 
