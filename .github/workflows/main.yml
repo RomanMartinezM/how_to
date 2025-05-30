@@ -31,14 +31,11 @@ jobs:
         working-directory: backend
     steps:
       - uses: actions/checkout@v4
-      - name: Install Composer dependencies
-        run: composer install --no-dev --optimize-autoloader
       - name: Deploy to Railway
         uses: bervProject/railway-deploy@main
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         with:
-          php-version: '8.1.10'
           service: "how-to"
 
 
