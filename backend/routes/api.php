@@ -32,6 +32,7 @@ Route::get('/getUsers', function (Request  $request) {
         return ['msg' => $msg];
 });
 
+
 // estas rutas se pueden acceder sin proveer de un token válido.
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
