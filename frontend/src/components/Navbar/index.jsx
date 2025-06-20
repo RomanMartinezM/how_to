@@ -5,64 +5,25 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <a
-                href="#"
-                className="flex-shrink-0 flex items-center">
-                <img
-                  className="h-8 w-auto"
-                  src="https://tailwindflex.com/images/logo.svg"
-                  alt="Logo"
-                />
-                <span className="ml-2 text-xl font-bold">Navbar</span>
-              </a>
               <div className="hidden md:ml-6 md:flex md:space-x-8">
                 <a
                   href="#"
                   className="text-white border-b-2 border-indigo-500 px-1 pt-1 inline-flex items-center text-sm font-medium">
-                  Dashboard
+                  Search
                 </a>
                 <a
                   href="#"
                   className="text-gray-300 hover:text-white border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 inline-flex items-center text-sm font-medium">
-                  Team
+                  Last searches
                 </a>
                 <a
                   href="#"
                   className="text-gray-300 hover:text-white border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 inline-flex items-center text-sm font-medium">
-                  Projects
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-300 hover:text-white border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 inline-flex items-center text-sm font-medium">
-                  Calendar
+                  Analytics
                 </a>
               </div>
             </div>
             <div className="flex items-center">
-              {/* <!-- Search --> */}
-              <div className="hidden md:flex md:ml-4">
-                <div className="relative">
-                  <input
-                    type="text"
-                    className="bg-gray-800 text-white rounded-md pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 w-64"
-                    placeholder="Search..."
-                  />
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg
-                      className="h-5 w-5 text-gray-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor">
-                      <path
-                        fillRule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-
               {/* <!-- Profile dropdown --> */}
               <div className="ml-3 relative hidden md:block">
                 <div>
@@ -149,47 +110,18 @@ const Navbar = () => {
             <a
               href="#"
               className="bg-gray-800 text-white block px-3 py-2 rounded-md text-base font-medium">
-              Dashboard
+              Search
             </a>
             <a
               href="#"
               className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-              Team
+              Last searches
             </a>
             <a
               href="#"
               className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-              Projects
+              Analytics
             </a>
-            <a
-              href="#"
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-              Calendar
-            </a>
-          </div>
-
-          {/* <!-- Mobile search --> */}
-          <div className="px-2 pt-2 pb-3">
-            <div className="relative">
-              <input
-                type="text"
-                className="bg-gray-800 text-white w-full rounded-md pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                placeholder="Search..."
-              />
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg
-                  className="h-5 w-5 text-gray-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor">
-                  <path
-                    fillRule="evenodd"
-                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-            </div>
           </div>
 
           {/* <!-- Mobile profile --> */}

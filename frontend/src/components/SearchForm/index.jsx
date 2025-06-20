@@ -1,13 +1,11 @@
 import { useState } from "react";
 import apiService from "../../services/apiService";
 import Notification from "../Notification";
-import ContentSearch from "../ContentSearch";
 
-const SearchForm = () => {
+const SearchForm = ({ setContent }) => {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [content, setContent] = useState("");
 
   const handleSearch = async () => {
     setLoading(true);
@@ -26,7 +24,7 @@ const SearchForm = () => {
   return (
     <div className="relative w-full max-w-xl mx-auto bg-white rounded-full">
       <input
-        placeholder="Search"
+        placeholder="Search for content..."
         className="rounded-full w-full h-16 bg-transparent py-2 pl-8 pr-32 outline-none border-2 border-gray-100 shadow-md hover:outline-none focus:ring-teal-200 focus:border-teal-200"
         type="text"
         name="query"
@@ -57,8 +55,6 @@ const SearchForm = () => {
         loading={loading}
         message={message}
       />
-
-      <ContentSearch content={content} />
     </div>
   );
 };
