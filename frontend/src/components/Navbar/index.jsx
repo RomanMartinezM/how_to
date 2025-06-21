@@ -1,3 +1,20 @@
+/**
+ * A responsive navigation bar component with mobile support.
+ * 
+ * @component
+ * @param {Function} onSearchClick - Callback function triggered when the Search button is clicked
+ * @param {Function} onInfoCardClick - Callback function triggered when the Last searches button is clicked
+ * @param {Function} onAnalyticsClick - Callback function triggered when the Analytics button is clicked
+ * @returns {JSX.Element} A responsive navigation bar with desktop and mobile views
+ * 
+ * @example
+ * // Basic usage
+ * <Navbar 
+ *   onSearchClick={() => handleSearchClick()}
+ *   onInfoCardClick={() => handleInfoCardClick()}
+ *   onAnalyticsClick={() => handleAnalyticsClick()}
+ * />
+ */
 const Navbar = ({ onSearchClick, onInfoCardClick, onAnalyticsClick }) => {
   return (
     <>
