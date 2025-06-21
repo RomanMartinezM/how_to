@@ -1,4 +1,4 @@
-const Navbar = () => {
+const Navbar = ({ onSearchClick, onInfoCardClick, onAnalyticsClick }) => {
   return (
     <>
       <nav className="bg-gray-900 text-white shadow-lg">
@@ -6,21 +6,22 @@ const Navbar = () => {
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <div className="hidden md:ml-6 md:flex md:space-x-8">
-                <a
-                  href="#"
-                  className="text-white border-b-2 border-indigo-500 px-1 pt-1 inline-flex items-center text-sm font-medium">
+                <button
+                  onClick={onSearchClick}
+                  className="text-white border-b-2 border-indigo-500 px-1 pt-1 inline-flex items-center text-sm font-medium hover:cursor-pointer"
+                >
                   Search
-                </a>
-                <a
-                  href="#"
+                </button>
+                <button
+                  onClick={onInfoCardClick}
                   className="text-gray-300 hover:text-white border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 inline-flex items-center text-sm font-medium">
                   Last searches
-                </a>
-                <a
-                  href="#"
+                </button>
+                <button
+                onClick={onAnalyticsClick}
                   className="text-gray-300 hover:text-white border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 inline-flex items-center text-sm font-medium">
                   Analytics
-                </a>
+                </button>
               </div>
             </div>
             <div className="flex items-center">
@@ -107,11 +108,12 @@ const Navbar = () => {
           className="md:hidden hidden"
           id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1">
-            <a
-              href="#"
-              className="bg-gray-800 text-white block px-3 py-2 rounded-md text-base font-medium">
+            <button
+              onClick={onSearchClick}
+              className="bg-gray-800 text-white block px-3 py-2 rounded-md text-base font-medium hover:cursor-pointer w-full text-left"
+            >
               Search
-            </a>
+            </button>
             <a
               href="#"
               className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
