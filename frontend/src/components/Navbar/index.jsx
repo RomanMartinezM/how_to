@@ -19,14 +19,28 @@ import { useState } from 'react';
  */
 const Navbar = ({ onSearchClick, onInfoCardClick, onAnalyticsClick }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState('search');
 
   const handleMobileMenuToggle = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const handleMobileMenuItemClick = (handler) => {
+  const handleMobileMenuItemClick = (handler, item) => {
     if (handler) handler();
+    setActiveItem(item);
     setIsMobileMenuOpen(false);
+  };
+  
+  const getButtonClass = (item) => {
+    const baseClass = "px-1 pt-1 inline-flex items-center text-sm font-medium hover:cursor-pointer border-b-2 ";
+    const activeClass = "text-white border-indigo-500";
+    const inactiveClass = "text-gray-300 hover:text-white border-transparent hover:border-gray-300";
+    return baseClass + (activeItem === item ? activeClass : inactiveClass);
+  };
+  
+  const getMobileButtonClass = (item) => {
+    const baseClass = "block px-3 py-2 rounded-md text-base font-medium w-full text-left ";
+    return baseClass + (activeItem === item ? "text-white bg-gray-800" : "text-gray-300 hover:bg-gray-700 hover:text-white");
   };
   return (
     <>
@@ -36,19 +50,28 @@ const Navbar = ({ onSearchClick, onInfoCardClick, onAnalyticsClick }) => {
             <div className="flex items-center">
               <div className="hidden md:ml-6 md:flex md:space-x-8">
                 <button
-                  onClick={onSearchClick}
-                  className="text-white border-b-2 border-indigo-500 px-1 pt-1 inline-flex items-center text-sm font-medium hover:cursor-pointer"
+                  onClick={() => {
+                    onSearchClick();
+                    setActiveItem('search');
+                  }}
+                  className={getButtonClass('search')}
                 >
                   Search
                 </button>
                 <button
-                  onClick={onInfoCardClick}
-                  className="text-gray-300 hover:text-white border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 inline-flex items-center text-sm font-medium">
+                  onClick={() => {
+                    onInfoCardClick();
+                    setActiveItem('searches');
+                  }}
+                  className={getButtonClass('searches')}>
                   Last searches
                 </button>
                 <button
-                onClick={onAnalyticsClick}
-                  className="text-gray-300 hover:text-white border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 inline-flex items-center text-sm font-medium">
+                  onClick={() => {
+                    onAnalyticsClick();
+                    setActiveItem('analytics');
+                  }}
+                  className={getButtonClass('analytics')}>
                   Analytics
                 </button>
               </div>
@@ -92,19 +115,19 @@ const Navbar = ({ onSearchClick, onInfoCardClick, onAnalyticsClick }) => {
           id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1">
             <button
-              onClick={() => handleMobileMenuItemClick(onSearchClick)}
-              className="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left"
+              onClick={() => handleMobileMenuItemClick(onSearchClick, 'search')}
+              className={getMobileButtonClass('search')}
             >
               Search
             </button>
             <button
-              onClick={() => handleMobileMenuItemClick(onInfoCardClick)}
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">
+              onClick={() => handleMobileMenuItemClick(onInfoCardClick, 'searches')}
+              className={getMobileButtonClass('searches')}>
               Last searches
             </button>
             <button
-              onClick={() => handleMobileMenuItemClick(onAnalyticsClick)}
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">
+              onClick={() => handleMobileMenuItemClick(onAnalyticsClick, 'analytics')}
+              className={getMobileButtonClass('analytics')}>
               Analytics
             </button>
           </div>

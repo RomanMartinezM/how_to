@@ -26,7 +26,7 @@ const Home = () => {
   };
 
   const [content, setContent] = useState("");
-  const [showSearchForm, setShowSearchForm] = useState(false);
+  const [showSearchForm, setShowSearchForm] = useState(true);
   const [showInfoCard, setShowInfoCard] = useState(false);
   const [showAnalytics, setShowAnalytics] = useState(false);
 
