@@ -50,9 +50,9 @@ const Home = () => {
 
   return (
     <>
-      <div className="bg-gray-100">
+      <div className="min-h-screen bg-gray-100 flex flex-col">
         <Navbar onSearchClick={toggleSearchForm} onInfoCardClick={toggleInfoCard} onAnalyticsClick={toggleAnalytics}/>
-        <div className="container mx-auto pt-12 pb-20">
+        <div className="flex-grow w-full px-4 sm:px-6 lg:px-8 py-8">
           <h1 className="text-4xl font-bold text-gray-800 text-center mb-8">
             Search something
           </h1>
