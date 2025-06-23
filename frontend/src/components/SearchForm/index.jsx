@@ -8,13 +8,18 @@ const SearchForm = ({ setContent }) => {
   const [message, setMessage] = useState("");
 
   const handleSearch = async () => {
+    if (!query.trim()) return; // Don't search if query is empty
+    
     setLoading(true);
     setMessage("Searching, please wait...");
+    setContent(""); // Clear previous content immediately when search starts
+    
     try {
       const promptRes = await apiService.getResponse(query);
       setContent(promptRes.choices[0].message.content);
     } catch (error) {
       setMessage("Error: " + error);
+      setContent(""); // Clear content on error too
       throw error;
     } finally {
       setLoading(false);

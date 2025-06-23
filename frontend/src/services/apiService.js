@@ -23,8 +23,75 @@ const openai = new OpenAI({
  * @param {String} prompt - Prompt to pass
  * @returns {Promise} - The fetch promise
  */
+// Function to store search topic in the database
+const storeSearchTopic = async (topic) => {
+  try {
+    // Replace this with your actual database storage logic
+    const response = await fetch('http://your-backend-api.com/api/search-topics', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        topic,
+        timestamp: new Date().toISOString(),
+      }),
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to store search topic');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error storing search topic:', error);
+    throw error;
+  }
+};
+
+/**
+ * Extract main topic from a search query
+ * @param {String} query - The search query
+ * @returns {String} - The extracted main topic
+ */
+const extractMainTopic = async (query) => {
+  try {
+    const response = await openai.chat.completions.create({
+      model: "microsoft/mai-ds-r1:free",
+      messages: [
+        {
+          role: "system",
+          content: "You are a helpful assistant that extracts the main topic from search queries. Respond with only the main topic, nothing else."
+        },
+        {
+          role: "user",
+          content: `Extract the main topic from this search query: "${query}"`
+        }
+      ],
+      temperature: 0.3,
+    });
+    
+    return response.choices[0].message.content.trim();
+  } catch (error) {
+    console.error("Error extracting main topic:", error);
+    return query; // Return original query if extraction fails
+  }
+};
+
+/**
+ * Process search query and get response
+ * @param {String} prompt - The search query
+ * @returns {Promise<Object>} - The response with search results and extracted topic
+ */
 export const getResponse = async (prompt) => {
   try {
+    // First extract the main topic
+    const mainTopic = await extractMainTopic(prompt);
+    
+    // Store the topic in the database (you'll need to implement this function)
+    // await storeSearchTopic(mainTopic);
+    
+    // Then get the response for the original query
     const response = await openai.chat.completions.create({
       model: "microsoft/mai-ds-r1:free",
       messages: [
@@ -39,6 +106,7 @@ export const getResponse = async (prompt) => {
       throw new Error(`API error: ${response}`);
     }
 
+    console.log("mainTopic: ", mainTopic);
     return response;
   } catch (error) {
     throw error;
