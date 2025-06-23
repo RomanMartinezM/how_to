@@ -1,10 +1,8 @@
-// import { useState, useEffect } from 'react};
 import "../../App.css";
 import InfoCard from "../../components/InfoCard";
 import Navbar from "../../components/Navbar";
 import SearchForm from "../../components/SearchForm";
 import ContentSearch from "../../components/ContentSearch";
-// import { set, useForm } from 'react-hook-form';
 import { useState } from "react";
 
 const Home = () => {
@@ -19,6 +17,7 @@ const Home = () => {
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maurissit amet magna id ex hendrerit semper.",
   };
+  
   const dataContact = {
     title: "15 minutes ago",
     content:
@@ -26,57 +25,55 @@ const Home = () => {
   };
 
   const [content, setContent] = useState("");
-  const [showSearchForm, setShowSearchForm] = useState(true);
-  const [showInfoCard, setShowInfoCard] = useState(false);
-  const [showAnalytics, setShowAnalytics] = useState(false);
+  const [activeView, setActiveView] = useState('search');
 
-  const toggleSearchForm = () => {
-    setShowSearchForm(prev => prev ? prev : !prev);
-    setShowInfoCard(false);
-    setShowAnalytics(false)
-  };
-  
-  const toggleInfoCard = () => {
-    setShowInfoCard(prev => prev ? prev : !prev);
-    setShowSearchForm(false);
-    setShowAnalytics(false)
-  };
-
-  const toggleAnalytics = () => {
-    setShowAnalytics(prev => prev ? prev : !prev);
-    setShowSearchForm(false);
-    setShowInfoCard(false);
-  }
+  const toggleSearchForm = () => setActiveView('search');
+  const toggleInfoCard = () => setActiveView('info');
+  const toggleAnalytics = () => setActiveView('analytics');
 
   return (
-    <>
-      <div className="min-h-screen bg-gray-100 flex flex-col">
-        <Navbar onSearchClick={toggleSearchForm} onInfoCardClick={toggleInfoCard} onAnalyticsClick={toggleAnalytics}/>
-        <div className="flex-grow w-full px-4 sm:px-6 lg:px-8 py-8">
-          <h1 className="text-4xl font-bold text-gray-800 text-center mb-8">
-            Search something
-          </h1>
-          {showSearchForm && <SearchForm setContent={setContent} />}
-          <ContentSearch content={content} />
+    <div className="min-h-screen bg-gray-100 flex flex-col pt-16">
+      <Navbar 
+        onSearchClick={toggleSearchForm} 
+        onInfoCardClick={toggleInfoCard} 
+        onAnalyticsClick={toggleAnalytics}
+      />
+      <div className="flex-grow w-full px-4 sm:px-6 lg:px-8 py-8">
+        {activeView === 'search' && (
+          <>
+            <h1 className="text-4xl font-bold text-gray-800 text-center mb-8">
+              Search something
+            </h1>
+            <SearchForm setContent={setContent} />
+            <ContentSearch content={content} />
+          </>
+        )}
 
+        {activeView === 'info' && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {showInfoCard && <InfoCard
+            <InfoCard
               title={dataServices.title}
               content={dataServices.content}
-            />}
-            {showInfoCard && <InfoCard
+            />
+            <InfoCard
               title={dataAbout.title}
               content={dataAbout.content}
-            />}
-            {showInfoCard && <InfoCard
+            />
+            <InfoCard
               title={dataContact.title}
               content={dataContact.content}
-            />}
-            {showAnalytics && <p>Analytics</p>}
+            />
           </div>
-        </div>
+        )}
+
+        {activeView === 'analytics' && (
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-2xl font-semibold mb-4">Analytics</h2>
+            <p>Analytics content will be displayed here.</p>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 
