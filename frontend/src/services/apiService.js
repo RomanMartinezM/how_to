@@ -55,26 +55,38 @@ const storeSearchTopic = async (topic) => {
  * @returns {String} - The extracted main topic
  */
 const extractMainTopic = async (query) => {
+  if (!query || typeof query !== 'string' || !query.trim()) {
+    console.warn('Invalid query provided to extractMainTopic');
+    return null;
+  }
+
   try {
     const response = await openai.chat.completions.create({
       model: "microsoft/mai-ds-r1:free",
       messages: [
         {
           role: "system",
-          content: "You are a helpful assistant that extracts the main topic from search queries. Respond with only the main topic, nothing else."
+          content: "You are a helpful assistant that extracts the main topic from a search query. Return only the main topic, nothing else.",
         },
         {
           role: "user",
-          content: `Extract the main topic from this search query: "${query}"`
-        }
+          content: `Extract the main topic from this search query: "${query}"`,
+        },
       ],
-      temperature: 0.3,
+      max_tokens: 50,
+    }, {
+      timeout: 10000 // 10 second timeout
     });
-    
+
+    if (!response?.choices?.[0]?.message?.content) {
+      throw new Error('Invalid response format from AI service');
+    }
+
     return response.choices[0].message.content.trim();
   } catch (error) {
     console.error("Error extracting main topic:", error);
-    return query; // Return original query if extraction fails
+    // Don't fail the entire search if topic extraction fails
+    return null;
   }
 };
 

@@ -44,8 +44,12 @@ const Home = () => {
             <h1 className="text-4xl font-bold text-gray-800 text-center mb-8">
               Search something
             </h1>
-            <SearchForm setContent={setContent} />
-            <ContentSearch content={content} />
+            <div className="mb-8">
+              <SearchForm setContent={setContent} />
+            </div>
+            <div className="mt-6">
+              <ContentSearch content={content} />
+            </div>
           </>
         )}
 
