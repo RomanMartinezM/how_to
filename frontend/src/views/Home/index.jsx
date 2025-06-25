@@ -27,9 +27,17 @@ const Home = () => {
   const [content, setContent] = useState("");
   const [activeView, setActiveView] = useState('search');
 
-  const toggleSearchForm = () => setActiveView('search');
+  const toggleSearchForm = () => {
+    setActiveView('search');
+  };
+  
   const toggleInfoCard = () => setActiveView('info');
   const toggleAnalytics = () => setActiveView('analytics');
+  
+  const toggleGenerateImages = () => {
+    setContent(""); // Clear any existing search results
+    setActiveView('generateImages');
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col pt-16">
@@ -37,6 +45,7 @@ const Home = () => {
         onSearchClick={toggleSearchForm} 
         onInfoCardClick={toggleInfoCard} 
         onAnalyticsClick={toggleAnalytics}
+        onGenerateImagesClick={toggleGenerateImages}
       />
       <div className="flex-grow w-full px-4 sm:px-6 lg:px-8 py-8">
         {activeView === 'search' && (
@@ -46,6 +55,24 @@ const Home = () => {
             </h1>
             <div className="mb-8">
               <SearchForm setContent={setContent} />
+            </div>
+            <div className="mt-6">
+              <ContentSearch content={content} />
+            </div>
+          </>
+        )}
+
+        {activeView === 'generateImages' && (
+          <>
+            <h1 className="text-4xl font-bold text-gray-800 text-center mb-8">
+              Generate an image
+            </h1>
+            <div className="mb-8">
+              <SearchForm 
+                setContent={setContent} 
+                placeholder="Generate an image"
+                buttonText="Generate"
+              />
             </div>
             <div className="mt-6">
               <ContentSearch content={content} />

@@ -7,6 +7,7 @@ import { useState } from 'react';
  * @param {Function} onSearchClick - Callback function triggered when the Search button is clicked
  * @param {Function} onInfoCardClick - Callback function triggered when the Last searches button is clicked
  * @param {Function} onAnalyticsClick - Callback function triggered when the Analytics button is clicked
+ * @param {Function} onGenerateImagesClick - Callback function triggered when the Generate images button is clicked
  * @returns {JSX.Element} A responsive navigation bar with desktop and mobile views
  * 
  * @example
@@ -17,7 +18,7 @@ import { useState } from 'react';
  *   onAnalyticsClick={() => handleAnalyticsClick()}
  * />
  */
-const Navbar = ({ onSearchClick, onInfoCardClick, onAnalyticsClick }) => {
+const Navbar = ({ onSearchClick, onInfoCardClick, onAnalyticsClick, onGenerateImagesClick }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState('search');
 
@@ -76,6 +77,15 @@ const Navbar = ({ onSearchClick, onInfoCardClick, onAnalyticsClick }) => {
               >
                 Analytics
               </button>
+              <button
+                onClick={() => {
+                  onGenerateImagesClick();
+                  setActiveItem('generateImages');
+                }}
+                className={getButtonClass('generateImages')}
+              >
+                Generate images
+              </button>
             </div>
           </div>
           <div className="flex items-center md:hidden">
@@ -130,6 +140,12 @@ const Navbar = ({ onSearchClick, onInfoCardClick, onAnalyticsClick }) => {
             className={getMobileButtonClass('analytics')}
           >
             Analytics
+          </button>
+          <button
+            onClick={() => handleMobileMenuItemClick(onGenerateImagesClick, 'generateImages')}
+            className={getMobileButtonClass('generateImages')}
+          >
+            Generate images
           </button>
         </div>
       </div>
