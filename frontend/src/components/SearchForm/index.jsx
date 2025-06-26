@@ -53,14 +53,19 @@ const SearchForm = ({
     
     try {
       // Connect to the text-to-image Gradio space
-      const app = await Client.connect("Pratap2002/text-to-image");
-      
-      // Call the predict function with the user's query
+      const app = await Client.connect("https://api-inference.huggingface.co/models/ZB-Tech/Text-to-Image", {
+        hf_token: "YOUR_HF_TOKEN" // Optional: Only needed if the space requires it
+      });
+      const app_info = await app.view_api();
+
+      console.log("App info:", app_info);
+/*
+      // Call the predict function with the user's query directly
       const result = await app.predict("/predict", [
-        trimmedQuery,  // prompt
+        trimmedQuery,  // Use the query directly as prompt
         7,             // num_inference_steps
         7.5,           // guidance_scale
-        42,            // seed (can be random)
+        Math.floor(Math.random() * 1000), // Random seed
         "normal"       // safety_checker
       ]);
       
@@ -85,6 +90,8 @@ const SearchForm = ({
         console.error("Unexpected API response format:", result);
         throw new Error("No valid image data received from the API");
       }
+
+      */
     } catch (error) {
       console.error("Generation error:", error);
       const errorMessage = error.response?.data?.error || 

@@ -30,6 +30,7 @@ const Navbar = ({ onSearchClick, onInfoCardClick, onAnalyticsClick, onGenerateIm
     if (handler) handler();
     setActiveItem(item);
     setIsMobileMenuOpen(false);
+    console.log("Active item:", activeItem);
   };
   
   const getButtonClass = (item) => {
