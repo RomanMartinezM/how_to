@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SearchController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,6 +32,8 @@ Route::get('/getUsers', function (Request  $request) {
         }
         return ['msg' => $msg];
 });
+
+Route::post('/searches', [SearchController::class, 'create'])->name('searches.create');
 
 
 // estas rutas se pueden acceder sin proveer de un token válido.
