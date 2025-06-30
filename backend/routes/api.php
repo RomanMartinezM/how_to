@@ -34,6 +34,8 @@ Route::get('/getUsers', function (Request  $request) {
 });
 
 Route::post('/searches', [SearchController::class, 'create'])->name('searches.create');
+Route::get('/searches/most-recent', [SearchController::class, 'getMostRecentSearches'])->name('searches.getMostRecentSearches');
+Route::get('/searches/most-querying-topics', [SearchController::class, 'getSearchTopicsMostQuerying'])->name('searches.getSearchTopicsMostQuerying');
 
 
 // estas rutas se pueden acceder sin proveer de un token válido.
