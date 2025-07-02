@@ -24,27 +24,75 @@ const openai = new OpenAI({
  * @returns {Promise} - The fetch promise
  */
 // Function to store search topic in the database
-const storeSearchTopic = async (topic) => {
+/**
+ * Store search data in the database
+ * @param {Object} request - The request to store with the following properties:
+ *   - topic: The search topic. It can be null
+ *   - search_result: The search result
+ * @returns {Promise} - The fetch promise
+ */
+const createSearchData = async (request) => {
   try {
-    // Replace this with your actual database storage logic
-    const response = await fetch('http://your-backend-api.com/api/search-topics', {
+    const response = await fetch(`${API_BASE_URL}/searches`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        topic,
-        timestamp: new Date().toISOString(),
-      }),
+      headers: DEFAULT_HEADERS,
+      body: request,
     });
     
-    if (!response.ok) {
-      throw new Error('Failed to store search topic');
+    if (!response.data) {
+      throw new Error(response.data);
     }
     
-    return await response.json();
+    return await response.data;
   } catch (error) {
-    console.error('Error storing search topic:', error);
+    console.error('Error went wrong: ', error);
+    throw error;
+  }
+};
+
+
+/**
+ * Get the most recent searches
+ *
+ * @returns {Promise} - The fetch promise
+ */
+const getMostRecentSearches = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/searches/most-recent`, {
+      method: 'GET',
+      headers: DEFAULT_HEADERS,
+    });
+    
+    if (!response.data) {
+      throw new Error(response.data);
+    }
+    
+    return await response.data;
+  } catch (error) {
+    console.error('Error went wrong: ', error);
+    throw error;
+  }
+};
+
+/**
+ * Get the most querying topics
+ *
+ * @returns {Promise} - The fetch promise
+ */
+const getSearchTopicsMostQuerying = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/searches/most-querying-topics`, {
+      method: 'GET',
+      headers: DEFAULT_HEADERS,
+    });
+    
+    if (!response.data) {
+      throw new Error(response.data);
+    }
+    
+    return await response.data;
+  } catch (error) {
+    console.error('Error went wrong: ', error);
     throw error;
   }
 };
@@ -109,7 +157,7 @@ export const getResponse = async (prompt) => {
       messages: [
         {
           role: "user",
-          content: prompt, //"What is the meaning of life?",
+          content: prompt, 
         },
       ],
     });
@@ -119,72 +167,21 @@ export const getResponse = async (prompt) => {
     }
 
     console.log("mainTopic: ", mainTopic);
+
+    await createSearchData({
+      topic: mainTopic,
+      search_result: response.choices[0].message.content,
+    });
     return response;
   } catch (error) {
     throw error;
   }
 };
 
-/**
- * Make a GET request to the API
- * @param {string} endpoint - The API endpoint to call
- * @param {Object} options - Additional fetch options
- * @returns {Promise} - The fetch promise
- */
-/*
-export const get = async (endpoint, options = {}) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      method: "GET",
-      headers: DEFAULT_HEADERS,
-      ...options,
-    });
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error("API GET request failed:", error);
-    throw error;
-  }
-};
-*/
-/**
- * Make a POST request to the API
- * @param {string} endpoint - The API endpoint to call
- * @param {Object} data - The data to send in the request body
- * @param {Object} options - Additional fetch options
- * @returns {Promise} - The fetch promise
- */
-/*
-export const post = async (endpoint, data, options = {}) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      method: "POST",
-      headers: DEFAULT_HEADERS,
-      body: JSON.stringify(data),
-      ...options,
-    });
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error("API POST request failed:", error);
-    throw error;
-  }
-};
-*/
 // Export a default object with all methods
 export default {
   getResponse,
-  // get,
-  // post,
-  // put,
-  // delete: del,
-  // uploadFile,
+  createSearchData,
+  getMostRecentSearches,
+  getSearchTopicsMostQuerying,
 };

@@ -3,7 +3,8 @@ import InfoCard from "../../components/InfoCard";
 import Navbar from "../../components/Navbar";
 import SearchForm from "../../components/SearchForm";
 import ContentSearch from "../../components/ContentSearch";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {getMostRecentSearches, getSearchTopicsMostQuerying} from "../../services/apiService";
 
 const Home = () => {
   const dataServices = {
@@ -31,6 +32,58 @@ const Home = () => {
   const toggleInfoCard = () => setActiveView('info');
   const toggleAnalytics = () => setActiveView('analytics');
 
+  const [mostRecentSearches, setMostRecentSearches] = useState([]);
+  const [searchTopicsMostQuerying, setSearchTopicsMostQuerying] = useState([]);
+
+  const getTimeAgo = (date) => {
+    const ONE_MINUTE = 60000;
+    const ONE_HOUR = ONE_MINUTE * 60;
+    const ONE_DAY = ONE_HOUR * 24;
+    const ONE_WEEK = ONE_DAY * 7;
+    const ONE_MONTH = ONE_DAY * 30;
+
+    const timeAgo = Date.now() - date.getTime();
+    if (timeAgo < ONE_MINUTE) {
+      return 'Just now';
+    } else if (timeAgo < ONE_HOUR) {
+      return `${Math.round(timeAgo / ONE_MINUTE)} minutes ago`;
+    } else if (timeAgo < ONE_DAY) {
+      return `${Math.round(timeAgo / ONE_HOUR)} hours ago`;
+    } else if (timeAgo < ONE_WEEK) {
+      return `${Math.round(timeAgo / ONE_DAY)} days ago`;
+    } else if (timeAgo < ONE_MONTH) {
+      return `${Math.round(timeAgo / ONE_WEEK)} weeks ago`;
+    } else {
+      return `${Math.round(timeAgo / ONE_MONTH)} months ago`;
+    }
+  };
+  
+  useEffect(() => {
+    const fetchMostRecentSearches = async () => {
+      try {
+        const res = await getMostRecentSearches();
+        const recentSearches = res.data.map((search) => (  
+          <InfoCard key={search._id} title={getTimeAgo(new Date(search.createdAt))} content={search.search_result} />
+        ));
+        setMostRecentSearches(recentSearches);
+      } catch (error) {
+        console.error('Error fetching most recent searches:', error);
+      }
+    };
+    
+    const fetchSearchTopicsMostQuerying = async () => {
+      try {
+        const res = await getSearchTopicsMostQuerying();
+        setSearchTopicsMostQuerying(res.data);
+      } catch (error) {
+        console.error('Error fetching search topics most querying:', error);
+      }
+    };
+    
+    fetchMostRecentSearches();
+    fetchSearchTopicsMostQuerying();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col pt-16">
       <Navbar 
@@ -55,18 +108,7 @@ const Home = () => {
 
         {activeView === 'info' && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <InfoCard
-              title={dataServices.title}
-              content={dataServices.content}
-            />
-            <InfoCard
-              title={dataAbout.title}
-              content={dataAbout.content}
-            />
-            <InfoCard
-              title={dataContact.title}
-              content={dataContact.content}
-            />
+            {mostRecentSearches}
           </div>
         )}
 

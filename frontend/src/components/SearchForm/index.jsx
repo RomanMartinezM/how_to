@@ -1,5 +1,5 @@
 import { useState } from "react";
-import apiService from "../../services/apiService";
+import {apiService, getMostRecentSearches, getSearchTopicsMostQuerying} from "../../services/apiService";
 import Notification from "../Notification";
 
 const SearchForm = ({ setContent }) => {
