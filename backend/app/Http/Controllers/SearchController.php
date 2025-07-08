@@ -24,13 +24,14 @@ class SearchController extends Controller
             Log::info('Creating new search', ['request' => $request->all()]);
 
             $validated = $request->validate([
-                'topic' => 'nullable|string',
-                'search_result' => 'required|string'
+                'search_query' => 'required|string',
+                'topic' => 'nullable|string'
+                
             ]);
 
             $search = Search::create([
                 'topic' => $validated['topic'] ?? null,  // Explicitly set to null if not provided
-                'search_result' => $validated['search_result']
+                'search_query' => $validated['search_query']
             ]);
             
             Log::info('Search created successfully', ['search_id' => $search->id]);

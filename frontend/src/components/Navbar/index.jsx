@@ -6,7 +6,7 @@ import { useState } from 'react';
  * @component
  * @param {Function} onSearchClick - Callback function triggered when the Search button is clicked
  * @param {Function} onInfoCardClick - Callback function triggered when the Last searches button is clicked
- * @param {Function} onAnalyticsClick - Callback function triggered when the Analytics button is clicked
+ * @param {Function} onStatisticsClick - Callback function triggered when the Statistics button is clicked
  * @returns {JSX.Element} A responsive navigation bar with desktop and mobile views
  * 
  * @example
@@ -14,10 +14,10 @@ import { useState } from 'react';
  * <Navbar 
  *   onSearchClick={() => handleSearchClick()}
  *   onInfoCardClick={() => handleInfoCardClick()}
- *   onAnalyticsClick={() => handleAnalyticsClick()}
+ *   onStatisticsClick={() => handleStatisticsClick()}
  * />
  */
-const Navbar = ({ onSearchClick, onInfoCardClick, onAnalyticsClick }) => {
+const Navbar = ({ onSearchClick, onInfoCardClick, onStatisticsClick }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState('search');
 
@@ -69,12 +69,12 @@ const Navbar = ({ onSearchClick, onInfoCardClick, onAnalyticsClick }) => {
               </button>
               <button
                 onClick={() => {
-                  onAnalyticsClick();
-                  setActiveItem('analytics');
+                  onStatisticsClick();
+                  setActiveItem('statistics');
                 }}
-                className={getButtonClass('analytics')}
+                className={getButtonClass('statistics')}
               >
-                Analytics
+                Statistics
               </button>
             </div>
           </div>
@@ -126,10 +126,10 @@ const Navbar = ({ onSearchClick, onInfoCardClick, onAnalyticsClick }) => {
             Last searches
           </button>
           <button
-            onClick={() => handleMobileMenuItemClick(onAnalyticsClick, 'analytics')}
-            className={getMobileButtonClass('analytics')}
+            onClick={() => handleMobileMenuItemClick(onStatisticsClick, 'statistics')}
+            className={getMobileButtonClass('statistics')}
           >
-            Analytics
+            Statistics
           </button>
         </div>
       </div>

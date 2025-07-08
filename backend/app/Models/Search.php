@@ -30,8 +30,8 @@ class Search extends Model
      * @var array
      */
     protected $fillable = [
-        'topic',
-        'search_result',
+        'search_query',
+        'topic'
     ];
 
     protected $attributes = [
@@ -100,7 +100,7 @@ class Search extends Model
     }
 
     /**
-     * Get the search_result attribute.
+     * Get the search_query attribute.
      *
      * @param  mixed  $value
      * @return string|null
@@ -111,13 +111,13 @@ class Search extends Model
     }
 
     /**
-     * Set the search_result attribute.
+     * Set the search_query attribute.
      *
      * @param  string|null  $value
      * @return void
      */
     public function setSearchResultAttribute($value)
     {
-        $this->attributes['search_result'] = $value !== null ? (string) $value : null;
+        $this->attributes['search_query'] = $value !== null ? (string) $value : null;
     }
 }

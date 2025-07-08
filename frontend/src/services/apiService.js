@@ -38,7 +38,6 @@ const createSearchData = async (request) => {
       headers: DEFAULT_HEADERS,
       body: request,
     });
-    
     if (!response.data) {
       throw new Error(response.data);
     }
@@ -63,11 +62,13 @@ const getMostRecentSearches = async () => {
       headers: DEFAULT_HEADERS,
     });
     
-    if (!response.data) {
-      throw new Error(response.data);
+    const data = await response.json();
+    if (!response.ok) {
+      console.error('Error response:', data);
+      throw new Error(data.message || 'Failed to fetch recent searches');
     }
-    
-    return await response.data;
+    console.log('getMostRecentSearches:', data);
+    return data;
   } catch (error) {
     console.error('Error went wrong: ', error);
     throw error;
@@ -86,11 +87,12 @@ const getSearchTopicsMostQuerying = async () => {
       headers: DEFAULT_HEADERS,
     });
     
-    if (!response.data) {
-      throw new Error(response.data);
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to fetch recent searches');
     }
-    
-    return await response.data;
+    console.log('getSearchTopicsMostQuerying:', data);
+    return data;
   } catch (error) {
     console.error('Error went wrong: ', error);
     throw error;
