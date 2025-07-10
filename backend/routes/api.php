@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SearchController;
+use Illuminate\Http\Response;
 /*
 |--------------------------------------------------------------------------
 | API Routes

@@ -5,7 +5,6 @@ import SearchForm from "../../components/SearchForm";
 import ContentSearch from "../../components/ContentSearch";
 import { useState, useEffect } from "react";
 import apiService from "../../services/apiService";
-import Statistics from "../../components/Statistics";
 
 const Home = () => {
   const [content, setContent] = useState("");
@@ -13,10 +12,8 @@ const Home = () => {
 
   const toggleSearchForm = () => setActiveView('search');
   const toggleInfoCard = () => setActiveView('info');
-  const toggleStatistics = () => setActiveView('statistics');
 
   const [mostRecentSearches, setMostRecentSearches] = useState([]);
-  const [searchTopicsMostQuerying, setSearchTopicsMostQuerying] = useState([]);
 
   const getTimeAgo = (date) => {
     const ONE_MINUTE = 60000;
@@ -54,31 +51,7 @@ const Home = () => {
       }
     };
     
-    const fetchSearchTopicsMostQuerying = async () => {
-      try {
-        const res = await apiService.getSearchTopicsMostQuerying();
-        const searchTopicsQuerying = res.data.map((topic) => {
-          // Handle the nested timestamp format: { $date: { $numberLong: "..." } }
-          const timestamp = topic.last_searched?.$date?.$numberLong 
-            ? parseInt(topic.last_searched.$date.$numberLong, 10)
-            : Date.now();
-            
-          return (
-            <Statistics 
-              key={topic.topic} 
-              title={topic.topic} 
-              content={`${topic.count} times queried - Last searched: ${getTimeAgo(new Date(timestamp))}`} 
-            />
-          );
-        });
-        setSearchTopicsMostQuerying(searchTopicsQuerying);
-      } catch (error) {
-        console.error('Error fetching search topics most querying:', error);
-      }
-    };
-    
     fetchMostRecentSearches();
-    fetchSearchTopicsMostQuerying();
   }, []);
 
   return (
@@ -86,7 +59,6 @@ const Home = () => {
       <Navbar 
         onSearchClick={toggleSearchForm} 
         onInfoCardClick={toggleInfoCard} 
-        onStatisticsClick={toggleStatistics}
       />
       <div className="flex-grow w-full px-4 sm:px-6 lg:px-8 py-8">
         {activeView === 'search' && (
@@ -109,11 +81,7 @@ const Home = () => {
           </div>
         )}
 
-        {activeView === 'statistics' && (
-          <div>
-            {searchTopicsMostQuerying}
-          </div>
-        )}
+
       </div>
     </div>
   );

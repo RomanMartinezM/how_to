@@ -6,7 +6,6 @@ import { useState } from 'react';
  * @component
  * @param {Function} onSearchClick - Callback function triggered when the Search button is clicked
  * @param {Function} onInfoCardClick - Callback function triggered when the Last searches button is clicked
- * @param {Function} onStatisticsClick - Callback function triggered when the Statistics button is clicked
  * @returns {JSX.Element} A responsive navigation bar with desktop and mobile views
  * 
  * @example
@@ -14,10 +13,9 @@ import { useState } from 'react';
  * <Navbar 
  *   onSearchClick={() => handleSearchClick()}
  *   onInfoCardClick={() => handleInfoCardClick()}
- *   onStatisticsClick={() => handleStatisticsClick()}
  * />
  */
-const Navbar = ({ onSearchClick, onInfoCardClick, onStatisticsClick }) => {
+const Navbar = ({ onSearchClick, onInfoCardClick }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState('search');
 
@@ -56,25 +54,44 @@ const Navbar = ({ onSearchClick, onInfoCardClick, onStatisticsClick }) => {
                 }}
                 className={getButtonClass('search')}
               >
+                <svg
+                  className="w-5 h-5 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
                 Search
               </button>
               <button
                 onClick={() => {
                   onInfoCardClick();
-                  setActiveItem('searches');
+                  setActiveItem('info');
                 }}
-                className={getButtonClass('searches')}
+                className={getButtonClass('info')}
               >
+                <svg
+                  className="w-5 h-5 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                  />
+                </svg>
                 Last searches
-              </button>
-              <button
-                onClick={() => {
-                  onStatisticsClick();
-                  setActiveItem('statistics');
-                }}
-                className={getButtonClass('statistics')}
-              >
-                Statistics
               </button>
             </div>
           </div>
@@ -120,16 +137,10 @@ const Navbar = ({ onSearchClick, onInfoCardClick, onStatisticsClick }) => {
             Search
           </button>
           <button
-            onClick={() => handleMobileMenuItemClick(onInfoCardClick, 'searches')}
-            className={getMobileButtonClass('searches')}
+            onClick={() => handleMobileMenuItemClick(onInfoCardClick, 'info')}
+            className={getMobileButtonClass('info')}
           >
             Last searches
-          </button>
-          <button
-            onClick={() => handleMobileMenuItemClick(onStatisticsClick, 'statistics')}
-            className={getMobileButtonClass('statistics')}
-          >
-            Statistics
           </button>
         </div>
       </div>
