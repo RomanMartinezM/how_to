@@ -1,21 +1,5 @@
 version: "3.8"
 services:
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    volumes:
-      - ./frontend:/app
-    container_name: how_to_frontend
-    ports:
-      - "3000:3000"
-    # network_mode: "host"
-    depends_on:
-      - backend
-    command: npm run dev -- --host
-    # explicitly expose frontend service to all interfaces
-    # command: npm run dev -- --host 0.0.0.0
-
   backend:
     build:
       context: ./backend
