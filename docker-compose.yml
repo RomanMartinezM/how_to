@@ -4,25 +4,46 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    container_name: how_to_backend
+    restart: unless-stopped
+    working_dir: /var/www/html
     volumes:
       - ./backend:/var/www/html
-      # :delegated
-    container_name: how_to_backend
+      - /var/www/html/vendor
     ports:
-      - "80:80"
-    env_file:
-      - ./backend/.env
+      - "8000:80"
+    environment:
+      - APP_ENV
+      - APP_DEBUG
+      - DB_CONNECTION
+      - DB_HOST
+      - DB_PORT
+      - DB_DATABASE
+      - DB_USERNAME
+      - DB_PASSWORD
     depends_on:
       - mongodb
+    networks:
+      - app-network
 
   mongodb:
     image: mongodb/mongodb-community-server
-    restart: always
     container_name: mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${DB_DATABASE}
     ports:
       - "27017:27017"
     volumes:
       - mongodb_data:/data/db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   mongodb_data:

@@ -1,81 +1,63 @@
-FROM httpd:2.4
-COPY ./backend/ /usr/local/apache2/htdocs/
-RUN echo "ServerName localhost" >> /usr/local/apache2/conf/httpd.conf
-
-# Use the official PHP image
+# Use the official PHP 8.1 image with Apache
 FROM php:8.1-apache
-# Use the official PHP image
-#RUN docker-php-ext-install pdo_mysql
-
-# Copy Laravel project to the container
-COPY . /var/www/html
 
 # Set working directory
 WORKDIR /var/www/html
 
-#install all the system dependencies and enable PHP modules 
-
-
-# Update and install required dependencies, including libonig-dev for mbstring
-RUN apt-get update -y && apt-get install -y \
-    libicu-dev libpq-dev libmcrypt-dev libonig-dev git zip unzip libzip-dev \
-    && rm -r /var/lib/apt/lists/*
-
-# Configure and install PHP extensions
-RUN docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
-RUN docker-php-ext-install \
-    intl \
-    mbstring \
-    pcntl \
-    pdo_mysql \
-    pdo_pgsql \
-    pgsql \
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libicu-dev \
+    libpq-dev \
+    libzip-dev \
     zip \
-    opcache
+    unzip \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl pdo_pgsql pgsql opcache
 
-
-# Install MongoDB via PECL
+# Install MongoDB extension
 RUN pecl install mongodb && docker-php-ext-enable mongodb
-      
-# Install composer dependencies
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
-#install composer
-# RUN php composer.phar install --ignore-platform-reqs
 
-#set our application folder as an environment variable
-ENV APP_HOME /var/www/html
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-#change uid and gid of apache to docker user uid/gid
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Set user and group for Apache
 RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 
-#change the web_root to laravel /var/www/html/public folder
-RUN sed -i -e "s/html/html\/public/g" /etc/apache2/sites-enabled/000-default.conf
+# Copy existing application directory contents
+COPY . /var/www/html
 
-# enable apache module rewrite
-RUN a2enmod rewrite
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-#copy source files and run composer
-COPY . $APP_HOME
+# Enable Apache modules and configure virtual host
+RUN a2enmod rewrite && \
+    sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf && \
+    sed -i 's!/var/www/!/var/www/html/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Verify that Composer is installed in your Docker container
-RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
+# Copy virtual host config
+COPY ./docker/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
-# debugging line to check if the command is accessible
-RUN composer --version
+# Install application dependencies
+RUN composer install --no-interaction --optimize-autoloader --no-dev
 
-# install all PHP dependencies
-RUN composer install --no-interaction  --ignore-platform-reqs
+# Generate application key if not exists
+RUN if [ ! -f .env ]; then \
+        cp .env.example .env && \
+        php artisan key:generate; \
+    fi
 
-# RUN composer dump-autoload --optimize --classmap-authoritative
-
-#change ownership of our applications
-RUN chown -R www-data:www-data $APP_HOME
-
-RUN php artisan key:generate
-
-# Expose port
+# Expose port 80
 EXPOSE 80
 
+# Start Apache in the foreground
+CMD ["apache2-foreground"]
 
 
 
