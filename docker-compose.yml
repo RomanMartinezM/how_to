@@ -1,6 +1,8 @@
 version: "3.8"
 services:
   backend:
+    env_file:
+      - ./backend/.env
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -9,18 +11,19 @@ services:
     working_dir: /var/www/html
     volumes:
       - ./backend:/var/www/html
-      - /var/www/html/vendor
     ports:
       - "8000:80"
     environment:
-      - APP_ENV
-      - APP_DEBUG
-      - DB_CONNECTION
-      - DB_HOST
-      - DB_PORT
-      - DB_DATABASE
-      - DB_USERNAME
-      - DB_PASSWORD
+      APP_KEY: "base64:oS3M4w3cKbPs3a+mvE1+qmdQ5+ovZmz6bIg194Dm5sA="
+      APP_ENV: "local"
+      APP_DEBUG: "true"
+      DB_CONNECTION: "mongodb"
+      DB_HOST: "mongodb"
+      DB_PORT: "27017"
+      DB_DATABASE: "how_to_db"
+      DB_USERNAME: "root"
+      DB_PASSWORD: "root"
+      DB_URI: "mongodb://root:root@mongodb:27017/how_to_db?authSource=admin"
     depends_on:
       - mongodb
     networks:
@@ -31,9 +34,9 @@ services:
     container_name: mongodb
     restart: unless-stopped
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
-      MONGO_INITDB_DATABASE: ${DB_DATABASE}
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "root"
+      MONGO_INITDB_DATABASE: "how_to_db"
     ports:
       - "27017:27017"
     volumes:

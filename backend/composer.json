@@ -11,6 +11,8 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "mongodb/laravel-mongodb": "^4.1",
+        "mongodb/mongodb": "^1.17.0",
+        "ext-mongodb": "*",
         "tymon/jwt-auth": "^2.0"
     },
     "require-dev": {

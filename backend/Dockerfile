@@ -33,6 +33,9 @@ RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 # Copy existing application directory contents
 COPY . /var/www/html
 
+# # Copy .env as .env
+# COPY --chown=www-data:www-data backend\.env /var/www/html/.env
+
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
@@ -45,13 +48,7 @@ RUN a2enmod rewrite && \
 COPY ./docker/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Install application dependencies
-RUN composer install --no-interaction --optimize-autoloader --no-dev
-
-# Generate application key if not exists
-RUN if [ ! -f .env ]; then \
-        cp .env.example .env && \
-        php artisan key:generate; \
-    fi
+RUN composer install --no-interaction --optimize-autoloader --no-dev --ignore-platform-reqs
 
 # Expose port 80
 EXPOSE 80
