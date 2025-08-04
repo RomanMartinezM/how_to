@@ -24,23 +24,23 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
-  railway-deploy:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
-    steps:
-      - uses: actions/checkout@v4
-      - name: Deploy to Railway
-        uses: bervProject/railway-deploy@main
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
-        with:
-          production-branch: main
-          deploy-message: "Deploy backend from GitHub Actions"
-          enable-commit-comment: true
-          service: "how-to"
+  # railway-deploy:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: backend
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Deploy to Railway
+  #       uses: bervProject/railway-deploy@main
+  #       env:
+  #         RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+  #         RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
+  #       with:
+  #         production-branch: main
+  #         deploy-message: "Deploy backend from GitHub Actions"
+  #         enable-commit-comment: true
+  #         service: "how-to"
 
 
           
