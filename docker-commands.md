@@ -30,3 +30,21 @@ docker rmi abc123456789
 
 #Force Remove the Image (if needed)
 docker rmi -f how_to-laravel
+
+#Check logs from a Docker service
+#1. View logs for a running container
+docker logs <container_name_or_id>
+#2. Follow logs in real-time (like tail -f)
+docker logs -f <container_name_or_id>
+#3. View logs with timestamps
+docker logs --timestamps <container_name_or_id>
+#4. View last N lines
+docker logs --tail=100 <container_name_or_id>
+#5. For Docker Compose services
+docker-compose logs <service_name>
+#6. Follow logs in Docker Compose
+docker-compose logs -f <service_name>
+#7. View logs since specific time
+docker logs --since 1h <container_name_or_id>
+#8. View logs for a specific time period
+docker logs --since 2025-08-05T20:00:00 --until 2025-08-05T21:00:00 <container_name_or_id>
