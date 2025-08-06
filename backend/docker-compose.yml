@@ -14,7 +14,7 @@ services:
     ports:
       - "8000:80"
     environment:
-      APP_KEY: "base64:oS3M4w3cKbPs3a+mvE1+qmdQ5+ovZmz6bIg194Dm5sA="
+      APP_KEY: ${APP_KEY}
       APP_ENV: ${APP_ENV}
       APP_DEBUG: ${APP_DEBUG}
       DB_CONNECTION: ${DB_CONNECTION}
