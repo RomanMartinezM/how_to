@@ -22,6 +22,9 @@ docker-compose down
 #Verify Running Containers. Check if your services started correctly.
 docker ps
 
+#Rebuild Docker images from scratch without using any cached layers
+docker-compose build --no-cache
+
 #Remove container
 #Delete the Image Use the docker rmi command with the image name or ID
 docker rmi my-image
