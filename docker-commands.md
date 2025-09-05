@@ -24,6 +24,7 @@ docker ps
 
 #Rebuild Docker images from scratch without using any cached layers
 docker-compose build --no-cache
+docker-compose up --build --no-cache
 
 #Remove container
 #Delete the Image Use the docker rmi command with the image name or ID
