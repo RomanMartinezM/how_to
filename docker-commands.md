@@ -22,6 +22,9 @@ docker-compose down
 #Verify Running Containers. Check if your services started correctly.
 docker ps
 
+#List all containers (including stopped ones)
+docker ps -a
+
 #Rebuild Docker images from scratch without using any cached layers
 docker-compose build --no-cache
 
@@ -33,6 +36,9 @@ docker rmi abc123456789
 
 #Force Remove the Image (if needed)
 docker rmi -f how_to-laravel
+
+#Remove container
+docker rm CONTAINER_NAME_OR_CONTAINER_ID
 
 #Check logs from a Docker service
 #1. View logs for a running container
