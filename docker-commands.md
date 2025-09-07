@@ -57,3 +57,6 @@ docker-compose logs -f <service_name>
 docker logs --since 1h <container_name_or_id>
 #8. View logs for a specific time period
 docker logs --since 2025-08-05T20:00:00 --until 2025-08-05T21:00:00 <container_name_or_id>
+
+#Enter to the container
+docker-compose exec CONTAINER_NAME bash
