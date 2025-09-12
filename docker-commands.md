@@ -28,6 +28,12 @@ docker ps -a
 #Rebuild Docker images from scratch without using any cached layers
 docker-compose build --no-cache
 
+#Restart a container defined in docker-compose.yml
+docker-compose restart <service_name>
+
+#To enter your container's shell
+docker-compose exec SERVICE_NAME bash
+
 #Remove container
 #Delete the Image Use the docker rmi command with the image name or ID
 docker rmi my-image
